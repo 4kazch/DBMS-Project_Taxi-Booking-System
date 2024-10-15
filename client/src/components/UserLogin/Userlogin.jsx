@@ -5,6 +5,7 @@ import { log } from "console";
 import { useNavigate } from "react-router-dom";
 import styles from "./Userlogin.module.css";
 
+
 function Userlogin() {
   // const navigate=useNavigate();
   // const handleSignin = (e) => {
@@ -33,10 +34,17 @@ function Userlogin() {
       .post("http://localhost:5000/api/users/login", { email, password })
       .then((res) => {
         if (res.status === 200) {
-          navigate("/user-page");
+            console.log(res.data);
+          navigate("/user-profile");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response && err.response.status === 400) {
+          window.alert("Invalid Email or Password. Please try again.");
+        } else {
+          window.alert("An error occurred during signin. Please try again.");
+        }
+      });
   }
 
   const handleChange = (event) => {
@@ -48,18 +56,17 @@ function Userlogin() {
     axios
       .post("http://localhost:5000/api/users/signup", values)
       .then((res) => {
-        if(res.status===200){
-            window.alert("REGISTERED SUCCESSFULLY");
+        if (res.status === 200) {
+          window.alert("Registered Successfully. Go to Login.");
         }
       })
       .catch((err) => {
         if (err.response && err.response.status === 400) {
-          // Email already exists, show alert
           window.alert("Email already exists. Please use a different email.");
         } else {
-          // Show general error alert
           window.alert("An error occurred during signup. Please try again.");
-  }});
+        }
+      });
   }
 
   useEffect(() => {
