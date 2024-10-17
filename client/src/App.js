@@ -8,6 +8,7 @@ import TripHistory from './components/TripHistory';
 import DriverProfile from './components/DriverProfile';
 import DriverTripPage from './components/DriverTripPage';
 import DriverTripHistory from './components/DriverTripHistory';
+import UserHome from './components/UserHome/UserHome';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/driver-profile" element={<DriverProfile />} />
           <Route path="/driver-trippage" element={<DriverTripPage />} />
           <Route path="/driver-triphistory" element={<DriverTripHistory />} />
+          <Route path="/user-home" element={<UserHome />} />
         </Routes>
       </Router>
     </>

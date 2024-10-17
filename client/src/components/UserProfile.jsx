@@ -14,34 +14,42 @@ function UserProfile() {
 
   return (
     <>
-      <div className="profile-container">
-        <h2>User Profile</h2>
-        <p>
-          <strong>Name:</strong> {profile.full_name}
-        </p>
-        <p>
-          <strong>Email:</strong> {profile.email}
-        </p>
-        <p>
-          <strong>Phone:</strong> {profile.phone_number}
-        </p>
-        <p>
-          <strong>Address:</strong> {profile.address}
-        </p>
-      </div>
-      <div>
+      <div className="profile-container flex flex-col items-center justify-center">
+      <div className="text-2xl flex gap-10 items-center justify-center font-mono p-10">
         <Link
-          to="/trip-book"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded"
+          to="/user-profile"
+          className="underline underline-offset-8"
+        >
+          Profile
+        </Link>
+        <Link
+          to="/user-home"
+          className="hover:underline underline-offset-8"
         >
           Book a Trip
         </Link>
         <Link
           to="/trip-history"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded"
+          className="hover:underline underline-offset-8"
         >
           View Trip History
         </Link>
+      </div>
+        <h2 className="text-5xl font-nunito font-bold">User Profile</h2>
+        <div className="text-3xl font-nunito">
+        <p className="py-3">
+          <strong>Name:</strong> {profile.full_name}
+        </p>
+        <p className="py-3">
+          <strong>Email:</strong> {profile.email}
+        </p>
+        <p className="py-3">
+          <strong>Phone:</strong> {profile.phone_number}
+        </p>
+        <p className="py-3">
+          <strong>Address:</strong> {profile.address}
+        </p>
+        </div>
       </div>
     </>
   );

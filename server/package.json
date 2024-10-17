@@ -13,6 +13,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@react-google-maps/api": "^2.20.3",
     "alert": "^6.0.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
