@@ -94,7 +94,7 @@ export default function UserHome() {
   const center = { lat: 40.7128, lng: -74.006 };
 
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyArTZ2W-jn4k7pievUpOa-assQHoTvE0T0",
+    googleMapsApiKey: "AIzaSyB6Vh09wGRkLwpvl8um58ojC1KsJlg08V8",
     libraries,
   });
 
@@ -178,13 +178,13 @@ export default function UserHome() {
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
-      <nav className="bg-white bg-opacity-70 backdrop-filter backdrop-blur-lg py-4 px-6 fixed w-full z-10 shadow-lg">
+    <div className="flex flex-col min-h-screen bg-gray-100 font-poppins">
+      <nav className="bg-white bg-opacity-70 backdrop-filter backdrop-blur-lg py-4 px-6 fixed w-full z-10 shadow-lg ">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
-              <Link to="/" className="text-black text-2xl font-bold ">
-                CABIFY
+              <Link to="/" className="text-black text-3xl font-bold tracking-tighter">
+                FASTAXI
               </Link>
             </div>
             <div className="flex items-center space-x-8">
@@ -207,9 +207,9 @@ export default function UserHome() {
         </div>
       </nav>
 
-      <div className="flex flex-col md:flex-row flex-grow pt-16">
+      <div className="flex flex-col md:flex-row flex-grow pt-16 mt-2">
         <div className="w-full md:w-1/3 p-4 bg-white shadow-md">
-          <div className="mb-4">
+          <div className="mb-4 mt-3">
             <label
               htmlFor="source"
               className="block text-sm font-medium text-gray-700 mb-2"
@@ -248,7 +248,7 @@ export default function UserHome() {
             </Autocomplete>
           </div>
           <button
-            className="w-full bg-blue-500 text-white p-2 rounded-md mb-4"
+            className="w-full bg-blue-500 text-white p-2 rounded-md mb-4 "
             onClick={calculateRoute}
           >
             Calculate Route
@@ -310,7 +310,7 @@ export default function UserHome() {
 
           <button
             onClick={handleBook}
-            className="w-full bg-green-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-green-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+            className="w-full bg-green-500 text-white py-3 px-4 rounded-lg font-semibold text-lg hover:bg-green-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
           >
             Book Now
           </button>

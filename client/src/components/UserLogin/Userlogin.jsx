@@ -1,19 +1,10 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import { log } from "console";
-import { useNavigate } from "react-router-dom";
-import styles from "./Userlogin.module.css";
 
-
-function Userlogin() {
-  // const navigate=useNavigate();
-  // const handleSignin = (e) => {
-  //     navigate('/trip-booking');
-  // };
-
+export default function UserLogin() {
   const navigate = useNavigate();
-
+  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -34,7 +25,7 @@ function Userlogin() {
       .post("http://localhost:5000/api/users/login", { email, password })
       .then((res) => {
         if (res.status === 200) {
-            console.log(res.data);
+          console.log(res.data);
           navigate("/user-profile");
         }
       })
@@ -58,6 +49,7 @@ function Userlogin() {
       .then((res) => {
         if (res.status === 200) {
           window.alert("Registered Successfully. Go to Login.");
+          setIsLogin(true);
         }
       })
       .catch((err) => {
@@ -69,147 +61,103 @@ function Userlogin() {
       });
   }
 
-  useEffect(() => {
-    const container = document.getElementById("container");
-    const registerbtn = document.getElementById("register");
-    const loginbtn = document.getElementById("login");
-
-    if (registerbtn && loginbtn && container) {
-      registerbtn.addEventListener("click", () => {
-        container.classList.add(styles.active);
-      });
-
-      loginbtn.addEventListener("click", () => {
-        container.classList.remove(styles.active);
-      });
-    }
-  }, []);
-
   return (
-    <>
-      <section className="flex flex-col items-center justify-center h-[100vh]">
-        <div className={styles.container} id="container">
-          <div className={styles.signup}>
-            <form onSubmit={handleSubmitSignup}>
-              <h1 className="text-3xl font-bold font-nunito mb-5">SIGN UP</h1>
-              <input
-                type="text"
-                onChange={handleChange}
-                placeholder="Full Name"
-                name="fullname"
-                value={values.fullname}
-                required
-              />
-              <input
-                type="text"
-                onChange={handleChange}
-                placeholder="Gender"
-                name="gender"
-                value={values.gender}
-                required
-              />
-              <input
-                type="text"
-                onChange={handleChange}
-                placeholder="Date of Birth"
-                name="dob"
-                value={values.dob}
-                required
-              />
-              <input
-                type="email"
-                onChange={handleChange}
-                placeholder="Email"
-                name="email"
-                value={values.email}
-                required
-              />
-              <input
-                type="tel"
-                onChange={handleChange}
-                placeholder="Mobile Number"
-                pattern="[0-9]{10}"
-                name="phone"
-                value={values.phone}
-                required
-              />
-              <input
-                type="text"
-                onChange={handleChange}
-                placeholder="Address"
-                name="address"
-                value={values.address}
-                required
-              />
-              <input
-                type="text"
-                onChange={handleChange}
-                placeholder="Username"
-                name="username"
-                value={values.username}
-                required
-              />
-              <input
-                type="password"
-                onChange={handleChange}
-                placeholder="Password"
-                name="password"
-                value={values.password}
-                required
-              />
-              <button type="submit">Sign Up</button>
-            </form>
-          </div>
-          <div className={styles.signin}>
-            <form onSubmit={handleSubmitLogin}>
-              <h1 className="text-3xl font-bold font-nunito mb-5">Sign In</h1>
-              <input
-                type="email"
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-                required
-              />
-              <input
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                required
-              />
-              <button type="submit">Sign In</button>
-            </form>
-          </div>
-          <div className={styles.tooglecontainer}>
-            <div className={styles.toogle}>
-              <div className={`${styles.tooglepanel} ${styles.toogleleft}`}>
-                <h1 className="text-3xl font-semibold font-nunito">
-                  Welcome User! Already a Member ?
-                </h1>
-                <p>
-                  Log in now to access your account and book rides instantly!
-                </p>
-                <button className={styles.hidden2} id="login">
-                  Log In
-                </button>
-              </div>
-              <div className={`${styles.tooglepanel} ${styles.toogleright}`}>
-                <h1 className="text-3xl font-semibold font-nunito">
-                  Hello, Friend ! <br />
-                  New Here ?
-                </h1>
-                <p>
-                  Sign up today for easy, convenient, and reliable taxi
-                  services!
-                </p>
-                <button className={styles.hidden2} id="register">
-                  Sign Up
-                </button>
-              </div>
+    <div className="min-h-screen bg-gray-50 flex flex-col font-poppins">
+      <nav className="bg-white bg-opacity-70 backdrop-filter backdrop-blur-lg py-4 px-6 fixed w-full z-10 shadow-md">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center">
+              <Link to="/" className="text-black text-3xl font-bold tracking-tighter">
+                FASTAXI
+              </Link>
+            </div>
+            <div className="flex items-center space-x-8">
+              <Link 
+                to="/help" 
+                className="text-black font-semibold text-lg hover:text-gray-600 transition-colors duration-300 relative group"
+              >
+                Help
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+              </Link>
             </div>
           </div>
         </div>
-      </section>
-    </>
+      </nav>
+
+      <main className="flex-grow flex items-center justify-center px-4 pt-20">
+        <div className="max-w-md w-full bg-white shadow-lg rounded-lg overflow-hidden">
+          <div className="px-6 py-8">
+            <h2 className="text-3xl font-bold text-center mb-6">
+              {isLogin ? "Sign In" : "Sign Up"}
+            </h2>
+            {isLogin ? (
+              <form onSubmit={handleSubmitLogin}>
+                <div className="mb-4">
+                  <input
+                    type="email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Email"
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div className="mb-6">
+                  <input
+                    type="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                    required
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-black text-white text-lg font-semibold py-2 px-4 rounded-md hover:bg-gray-800 transition-colors duration-300"
+                >
+                  Sign In
+                </button>
+              </form>
+            ) : (
+              <form onSubmit={handleSubmitSignup}>
+                {Object.entries(values).map(([key, value]) => (
+                  <div key={key} className="mb-4">
+                    <input
+                      type={key === "email" ? "email" : key === "password" ? "password" : "text"}
+                      onChange={handleChange}
+                      placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+                      name={key}
+                      value={value}
+                      required
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                ))}
+                <button
+                  type="submit"
+                  className="w-full bg-black text-white text-lg font-semibold py-2 px-4 rounded-md hover:bg-gray-800 transition-colors duration-300"
+                >
+                  Sign Up
+                </button>
+              </form>
+            )}
+            <p className="mt-4 text-center">
+              {isLogin ? "Don't have an account?" : "Already have an account?"}
+              <button
+                onClick={() => setIsLogin(!isLogin)}
+                className="ml-1 text-blue-500 hover:text-blue-700 transition-colors duration-300"
+              >
+                {isLogin ? "Sign Up" : "Sign In"}
+              </button>
+            </p>
+          </div>
+        </div>
+      </main>
+
+      <footer className="bg-black text-white py-4 px-6 mt-auto">
+        <div className="max-w-7xl mx-auto text-center">
+          <p>&copy; 2024 FASTAXI. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
   );
 }
-
-export default Userlogin;
