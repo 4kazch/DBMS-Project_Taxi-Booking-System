@@ -66,17 +66,16 @@ router.post('/signup', (req, res) => {
 
 router.post('/book-trip', (req, res) => {
   const values = [
-    req.body.pickupLocation,
-    req.body.dropoffLocation,
-    req.body.tripStartTime,
-    req.body.tripFare,
+    req.body.source,
+    req.body.destination,
+    req.body.fare,
+    req.body.taxiname
   ];
 
-  // Step 1: Find the first available taxi
-  const findTaxiQuery = "SELECT * FROM taxis WHERE status = 'AVAILABLE' LIMIT 1";
+  const findTaxiQuery = `SELECT * FROM taxis WHERE status = 'AVAILABLE' AND type=? LIMIT 1`;
 
-  db.query(findTaxiQuery, (err, taxiResult) => {
-    if (err) return res.status(500).json(err);
+  db.query(findTaxiQuery,[req.body.taxiname], (err, taxiResult) => {
+    if (err) return res.status(500).json("Error 1");
 
     if (taxiResult.length === 0) {
       return res.status(400).json('No available taxis at the moment');
@@ -86,19 +85,17 @@ router.post('/book-trip', (req, res) => {
     const driverId = taxiResult[0].driver_id;
     const customerId=userid;
 
-    // Step 2: Insert trip record with the assigned taxi and driver
     const bookTripQuery = `
-      INSERT INTO trips (customer_id, driver_id, taxi_id, pickup_location, dropoff_location, trip_start_time, trip_fare)
-      VALUES (?, ?, ?, ?, ?, ?, ?)`;
+      INSERT INTO trips (customer_id, driver_id, taxi_id, pickup_location, dropoff_location, trip_fare)
+      VALUES (?, ?, ?, ?, ?, ?)`;
 
-    db.query(bookTripQuery, [customerId, driverId, taxiId, req.body.pickupLocation, req.body.dropoffLocation, req.body.tripStartTime, req.body.tripFare], (err, result) => {
-      if (err) return res.status(500).json(err);
+    db.query(bookTripQuery, [customerId, driverId, taxiId, req.body.source, req.body.destination, req.body.fare], (err, result) => {
+      if (err) return res.status(500).json("Error 2");
 
-      // Step 3: Update taxi status to 'IN SERVICE'
       const updateTaxiStatusQuery = "UPDATE taxis SET status = 'IN SERVICE' WHERE taxi_id = ?";
 
       db.query(updateTaxiStatusQuery, [taxiId], (err) => {
-        if (err) return res.status(500).json(err);
+        if (err) return res.status(500).json("Error 3");
 
         res.status(200).json({ message: 'Trip booked successfully with taxi', taxiId, driverId });
       });
@@ -142,47 +139,6 @@ router.get('/trip-history', (req, res) => {
     return res.status(200).json(results);
   });
 });
-
-
-// const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY || 'your_google_maps_api_key';
-
-// // Function to calculate fare based on distance (in km)
-// const calculateFare = (distanceInKm) => {
-//   const baseFare = 50;  // Example base fare
-//   const farePerKm = 10;  // Example fare per km
-//   return baseFare + distanceInKm * farePerKm;
-// };
-
-// // Route to calculate fare using Google Maps Distance Matrix API
-// router.post('/calculate-fare', async (req, res) => {
-//   const { pickupLocation, dropoffLocation } = req.body;
-
-//   try {
-//     const googleMapsApiUrl = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${encodeURIComponent(pickupLocation)}&destinations=${encodeURIComponent(dropoffLocation)}&key=${GOOGLE_MAPS_API_KEY}`;
-    
-//     const response = await axios.get(googleMapsApiUrl);
-//     const data = response.data;
-
-//     if (data.status !== 'OK') {
-//       return res.status(400).json({ message: 'Error with Google Maps API' });
-//     }
-
-//     // Get distance in kilometers
-//     const distanceInMeters = data.rows[0].elements[0].distance.value;
-//     const distanceInKm = distanceInMeters / 1000;
-
-//     // Calculate fare
-//     const fare = calculateFare(distanceInKm);
-
-//     res.status(200).json({
-//       distance: `${distanceInKm} km`,
-//       fare: `₹${fare.toFixed(2)}`
-//     });
-//   } catch (error) {
-//     console.error('Error calculating fare:', error);
-//     res.status(500).json({ message: 'Failed to calculate fare' });
-//   }
-// });
 
 
 module.exports=router;

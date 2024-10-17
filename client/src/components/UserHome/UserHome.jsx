@@ -7,10 +7,13 @@ import {
   DirectionsRenderer,
 } from "@react-google-maps/api";
 import { log } from "console";
+import axios from "axios";
 
 const libraries = ["places"];
 const profileImage = require("./userimg.png");
 const DISTANCE_THRESHOLD = 2;
+let fare;
+let taxiname;
 
 const taxis = [
   {
@@ -41,6 +44,7 @@ const taxis = [
 
 const MapComponent = React.memo(({ directions }) => {
   const center = { lat: 40.7128, lng: -74.006 };
+  
   return (
     <GoogleMap
       center={center}
@@ -78,6 +82,8 @@ export default function UserHome() {
   const [cabRates, setCabRates] = useState({});
 
   useEffect(() => {
+    //taxiname=selectedTaxi.name;
+    console.log(taxiname);
     console.log("Selected taxi has been updated:", selectedTaxi);
   }, [selectedTaxi]);
   useEffect(() => {
@@ -94,7 +100,7 @@ export default function UserHome() {
   const center = { lat: 40.7128, lng: -74.006 };
 
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyArTZ2W-jn4k7pievUpOa-assQHoTvE0T0",
+    googleMapsApiKey: "AIzaSyB6Vh09wGRkLwpvl8um58ojC1KsJlg08V8",
     libraries,
   });
 
@@ -137,7 +143,7 @@ export default function UserHome() {
 
           const rates = {};
           taxis.forEach((taxi) => {
-            let fare;
+            
             if (distanceInKm <= DISTANCE_THRESHOLD) {
               fare = taxi.baseFare;
             } else {
@@ -156,6 +162,15 @@ export default function UserHome() {
 
   const handleBook = useCallback(() => {
     if (selectedTaxi && source && destination) {
+      axios
+      .post('http://localhost:5000/api/users/book-trip',{
+        source,
+        destination,
+        fare,
+        taxiname,
+      })
+      .then((res)=>console.log(res))
+      .catch((err)=>console.log(err))
       alert(
         `Booking confirmed!\nFrom: ${source}\nTo: ${destination}\nTaxi: ${selectedTaxi.name}\nDistance: ${distance}\nETA: ${duration}`
       );
@@ -278,7 +293,8 @@ export default function UserHome() {
                   }`}
                   onClick={() => {
                     setSelectedTaxi(taxi);
-                    console.log(selectedTaxi);
+                    //taxiname=selectedTaxi.name;
+                    //console.log(selectedTaxi.name);
                   }}
                 >
                   <div className="flex items-center justify-between">
