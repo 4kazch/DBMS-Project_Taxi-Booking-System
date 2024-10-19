@@ -41,7 +41,7 @@ router.post('/signup', (req, res) => {
   const insertUserQuery = "INSERT INTO drivers (full_name, gender, email, phone_number, license_number, address, date_of_birth, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
   const values = [
-    req.body.fullname,
+    req.body.fullName,
     req.body.gender,
     req.body.email,
     req.body.phone,

@@ -41,6 +41,11 @@ export default function DriverProfile() {
                 Trip History
               </Link>
             </div>
+            <div className="pt-4">
+            <Link to="/" className="text-black text-3xl font-bold tracking-tighter">
+              FASTAXI
+            </Link>
+            </div>
           </div>
         </div>
       </nav>

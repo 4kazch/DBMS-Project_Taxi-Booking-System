@@ -24,7 +24,7 @@
 }
 
 .container button {
-    background-color: #1e5feb;
+    background-color: black;
     color: #fff;
     padding: 10px 45px;
     border: 1px solid transparent;
@@ -39,6 +39,10 @@
 .container button.hidden2 {
     background-color: transparent;
     border-color: #fff;
+}
+
+button:hover,button.hidden2:hover{
+    background-color: #555;
 }
 
 .container form {
@@ -130,7 +134,7 @@
 .toogle {
     background-color: #1e5feb;
     height: 100%;
-    background: linear-gradient(to right, #4f4df8, #1e5feb);
+    background: black;
     color: #fff;
     position: relative;
     left: -100%;

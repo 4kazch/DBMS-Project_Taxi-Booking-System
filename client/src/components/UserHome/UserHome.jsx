@@ -12,8 +12,9 @@ import axios from "axios";
 const libraries = ["places"];
 const profileImage = require("./userimg.png");
 const DISTANCE_THRESHOLD = 2;
-let fare;
+let taxifare;
 let taxiname;
+let distanceInKm;
 
 const taxis = [
   {
@@ -82,8 +83,17 @@ export default function UserHome() {
   const [cabRates, setCabRates] = useState({});
 
   useEffect(() => {
-    //taxiname=selectedTaxi.name;
+    if(selectedTaxi!==null){
+    taxiname=selectedTaxi.name;
+    if (distanceInKm <= DISTANCE_THRESHOLD) {
+      taxifare = selectedTaxi.baseFare;
+    } else {
+      taxifare =
+        selectedTaxi.baseFare + (distanceInKm - DISTANCE_THRESHOLD) * selectedTaxi.rate;
+    }
+    }
     console.log(taxiname);
+    console.log(taxifare);
     console.log("Selected taxi has been updated:", selectedTaxi);
   }, [selectedTaxi]);
   useEffect(() => {
@@ -137,13 +147,13 @@ export default function UserHome() {
       (result, status) => {
         if (status === window.google.maps.DirectionsStatus.OK) {
           setDirections(result);
-          const distanceInKm = result.routes[0].legs[0].distance.value / 1000;
+          distanceInKm = result.routes[0].legs[0].distance.value / 1000;
           setDistance(result.routes[0].legs[0].distance.text);
           setDuration(result.routes[0].legs[0].duration.text);
 
           const rates = {};
           taxis.forEach((taxi) => {
-            
+            let fare;
             if (distanceInKm <= DISTANCE_THRESHOLD) {
               fare = taxi.baseFare;
             } else {
@@ -166,11 +176,15 @@ export default function UserHome() {
       .post('http://localhost:5000/api/users/book-trip',{
         source,
         destination,
-        fare,
+        taxifare,
         taxiname,
       })
       .then((res)=>console.log(res))
-      .catch((err)=>console.log(err))
+      .catch((err)=>{
+        if(err.res && err.res.status===400){
+          window.alert("Sorry, No Available Taxis at this Moment");
+        }
+      })
       alert(
         `Booking confirmed!\nFrom: ${source}\nTo: ${destination}\nTaxi: ${selectedTaxi.name}\nDistance: ${distance}\nETA: ${duration}`
       );
@@ -193,13 +207,13 @@ export default function UserHome() {
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
-      <nav className="bg-white bg-opacity-70 backdrop-filter backdrop-blur-lg py-4 px-6 fixed w-full z-10 shadow-lg">
+    <div className="flex flex-col min-h-screen bg-gray-100 font-poppins">
+      <nav className="bg-white bg-opacity-70 backdrop-filter backdrop-blur-lg py-4 px-6 fixed w-full z-10 shadow-lg ">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
-              <Link to="/" className="text-black text-2xl font-bold ">
-                CABIFY
+              <Link to="/" className="text-black text-3xl font-bold tracking-tighter">
+                FASTAXI
               </Link>
             </div>
             <div className="flex items-center space-x-8">

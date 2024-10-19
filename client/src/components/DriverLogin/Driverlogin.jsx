@@ -83,7 +83,7 @@ function Driverlogin() {
 
   return (
     <>
-      <section className="bg-blue-400 flex flex-col items-center justify-center h-[100vh]">
+      <section className="flex flex-col items-center justify-center h-[100vh]">
         <div className={styles.container} id="container">
           <div className={styles.signup}>
             <form onSubmit={handleSubmitSignup}>

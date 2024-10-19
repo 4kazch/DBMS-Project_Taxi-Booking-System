@@ -1,72 +1,125 @@
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { Clock, MapPin, DollarSign, User, Truck } from 'lucide-react';
 
-import axios from 'axios'
-import React, { useState, useEffect } from 'react'
+const profileImage = require("././UserHome/userimg.png");
 
-import { Card, CardContent, CardHeader, CardTitle } from "@mui/material"
-import { Table, TableBody } from "@mui/material"
-import { Link } from 'react-router-dom'
 export default function TripHistory() {
-  const [trips, setTrips] = useState([])
+  const [trips, setTrips] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     axios.get("http://localhost:5000/api/users/trip-history")
       .then((res) => {
-        setTrips(res.data)
+        setTrips(res.data);
+        setLoading(false);
       })
-      .catch((err) => console.log(err))
-  }, [])
+      .catch((err) => {
+        console.log(err);
+        setError('Failed to load trip history. Please try again later.');
+        setLoading(false);
+      });
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex space-x-8">
-              <Link to="/user-profile" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                Profile
-              </Link>
-              <Link to="/user-home" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+    <div className="min-h-screen bg-gray-50 flex flex-col font-poppins">
+      <nav className="bg-white bg-opacity-70 backdrop-filter backdrop-blur-lg py-4 px-6 fixed w-full z-10 shadow-md">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex justify-between items-center">
+            <Link to="/" className="text-black text-3xl font-bold tracking-tighter">
+              FASTAXI
+            </Link>
+            <div className="flex items-center space-x-8">
+              
+              <Link 
+                to="/user-home"
+                className="text-black font-semibold text-lg hover:text-gray-600 transition-colors duration-300 relative group"
+              >
                 Book a Trip
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
               </Link>
-              <Link to="/trip-history" className="inline-flex items-center px-1 pt-1 border-b-2 border-indigo-500 text-sm font-medium text-gray-900">
-                View Trip History
+              <Link to="/user-profile" className="relative">
+                <img
+                  src={profileImage}
+                  alt="Profile"
+                  className="rounded-full w-10 h-10 border-2 border-white transition-transform duration-300 hover:scale-110"
+                />
               </Link>
             </div>
           </div>
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <Card>
-        <h1 className="text-3xl font-bold text-center text-gray-900 font-nunito p-5">Trip History</h1>
-          <CardContent>
-            <div className="overflow-x-auto">
-              <Table className='table-auto'>
-                  <tr className='p-5'>
-                    <th className="w-[240px]">Pickup Location</th>
-                    <th className="w-[240px]">Dropoff Location</th>
-                    <th className="w-[200px]">Date</th>
-                    <th>Fare</th>
-                    <th>Driver</th>
-                    <th>Taxi License</th>
-                  </tr>
-                <TableBody>
-                  {trips.map((trip) => (
-                    <tr key={trip.trip_id}>
-                      <td className=" text-center py-5">{trip.pickup_location}</td>
-                      <td className='text-center py-5'>{trip.dropoff_location}</td>
-                      <td className='text-center py-5'>{new Date(trip.trip_start_time).toLocaleString()}</td>
-                      <td className='text-center py-5'>{trip.trip_fare}</td>
-                      <td className='text-center py-5'>{trip.driver_name}</td>
-                      <td className='text-center py-5'>{trip.taxi_license}</td>
-                    </tr>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </CardContent>
-        </Card>
+      <main className="flex-grow flex flex-col items-center justify-center px-4 pt-24">
+        <h1 className="text-4xl font-bold mb-8">Your Trip History</h1>
+        
+        {loading ? (
+          <div className="text-2xl">Loading your trips...</div>
+        ) : error ? (
+          <div className="text-2xl text-red-500">{error}</div>
+        ) : trips.length === 0 ? (
+          <div className="text-2xl">You haven't taken any trips yet.</div>
+        ) : (
+          <div className="w-full max-w-4xl">
+            {trips.map((trip) => (
+              <div key={trip.trip_id} className="bg-white shadow-md rounded-lg mb-6 p-6 hover:shadow-lg transition-shadow duration-300">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="flex items-center">
+                    <MapPin className="w-6 h-6 mr-2 text-green-500" />
+                    <div>
+                      <p className="text-sm text-gray-500">Pickup</p>
+                      <p className="font-semibold">{trip.pickup_location}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <MapPin className="w-6 h-6 mr-2 text-red-500" />
+                    <div>
+                      <p className="text-sm text-gray-500">Dropoff</p>
+                      <p className="font-semibold">{trip.dropoff_location}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <Clock className="w-6 h-6 mr-2 text-blue-500" />
+                    <div>
+                      <p className="text-sm text-gray-500">Date & Time</p>
+                      <p className="font-semibold">{new Date(trip.trip_start_time).toLocaleString()}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <DollarSign className="w-6 h-6 mr-2 text-yellow-500" />
+                    <div>
+                      <p className="text-sm text-gray-500">Fare</p>
+                      <p className="font-semibold">${trip.trip_fare}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <User className="w-6 h-6 mr-2 text-purple-500" />
+                    <div>
+                      <p className="text-sm text-gray-500">Driver</p>
+                      <p className="font-semibold">{trip.driver_name}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center">
+                    <Truck className="w-6 h-6 mr-2 text-gray-500" />
+                    <div>
+                      <p className="text-sm text-gray-500">Taxi License</p>
+                      <p className="font-semibold">{trip.taxi_license}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </main>
+
+      <footer className="bg-black text-white py-4 px-6 mt-12">
+        <div className="max-w-7xl mx-auto text-center">
+          <p>&copy; 2024 FASTAXI. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
-  )
+  );
 }

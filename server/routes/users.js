@@ -68,7 +68,7 @@ router.post('/book-trip', (req, res) => {
   const values = [
     req.body.source,
     req.body.destination,
-    req.body.fare,
+    req.body.taxifare,
     req.body.taxiname
   ];
 
@@ -89,7 +89,7 @@ router.post('/book-trip', (req, res) => {
       INSERT INTO trips (customer_id, driver_id, taxi_id, pickup_location, dropoff_location, trip_fare)
       VALUES (?, ?, ?, ?, ?, ?)`;
 
-    db.query(bookTripQuery, [customerId, driverId, taxiId, req.body.source, req.body.destination, req.body.fare], (err, result) => {
+    db.query(bookTripQuery, [customerId, driverId, taxiId, req.body.source, req.body.destination, req.body.taxifare], (err, result) => {
       if (err) return res.status(500).json("Error 2");
 
       const updateTaxiStatusQuery = "UPDATE taxis SET status = 'IN SERVICE' WHERE taxi_id = ?";

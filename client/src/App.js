@@ -9,6 +9,7 @@ import DriverProfile from './components/DriverProfile';
 import DriverTripPage from './components/DriverTripPage';
 import DriverTripHistory from './components/DriverTripHistory';
 import UserHome from './components/UserHome/UserHome';
+import HelpPage from './components/Help';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/driver-profile" element={<DriverProfile />} />
           <Route path="/driver-trippage" element={<DriverTripPage />} />
           <Route path="/driver-triphistory" element={<DriverTripHistory />} />
+          <Route path="/help" element={<HelpPage />} />
           <Route path="/user-home" element={<UserHome />} />
         </Routes>
       </Router>
