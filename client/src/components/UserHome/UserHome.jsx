@@ -110,7 +110,7 @@ export default function UserHome() {
   const center = { lat: 40.7128, lng: -74.006 };
 
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyB6Vh09wGRkLwpvl8um58ojC1KsJlg08V8",
+    googleMapsApiKey: process.env.API_KEY,
     libraries,
   });
 
