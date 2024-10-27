@@ -31,7 +31,7 @@ function Userlogin() {
   function handleSubmitLogin(event) {
     event.preventDefault();
     axios
-      .post("http://localhost:5001/api/users/login", { email, password })
+      .post("https://dbms-project-taxi-booking-system.onrender.com/api/users/login", { email, password })
       .then((res) => {
         if (res.status === 200) {
             console.log(res.data);
@@ -54,7 +54,7 @@ function Userlogin() {
   function handleSubmitSignup(event) {
     event.preventDefault();
     axios
-      .post("http://localhost:5001/api/users/signup", values)
+      .post("https://dbms-project-taxi-booking-system.onrender.com/api/users/signup", values)
       .then((res) => {
         if (res.status === 200) {
           window.alert("Registered Successfully. Go to Login.");

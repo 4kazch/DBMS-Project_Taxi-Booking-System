@@ -18,7 +18,7 @@ export default function DriverProfile() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5001/api/drivers/profile")
+      .get("https://dbms-project-taxi-booking-system.onrender.com/api/drivers/profile")
       .then((res) => {
         setProfile(res.data)
       })

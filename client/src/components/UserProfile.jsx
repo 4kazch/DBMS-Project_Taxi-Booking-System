@@ -9,7 +9,7 @@ export default function UserProfile() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    axios.get("http://localhost:5001/api/users/profile")
+    axios.get("https://dbms-project-taxi-booking-system.onrender.com/api/users/profile")
       .then((res) => {
         setProfile(res.data);
         setLoading(false);

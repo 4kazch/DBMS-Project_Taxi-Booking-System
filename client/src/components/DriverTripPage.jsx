@@ -15,14 +15,14 @@ export default function DriverTripPage() {
 
   const fetchTrips = () => {
     axios
-      .get('http://localhost:5001/api/drivers/driver-trips')
+      .get('https://dbms-project-taxi-booking-system.onrender.com/api/drivers/driver-trips')
       .then((res) => setTrips(res.data))
       .catch((err) => console.log(err))
   }
 
   function markAsFinished(tripId) {
     axios
-      .put(`http://localhost:5001/api/drivers/finish-trip/${tripId}`)
+      .put(`https://dbms-project-taxi-booking-system.onrender.com/api/drivers/finish-trip/${tripId}`)
       .then(() => {
         setTrips(trips.filter(trip => trip.trip_id !== tripId))
       })

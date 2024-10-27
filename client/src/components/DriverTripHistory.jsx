@@ -11,7 +11,7 @@ export default function DriverTripHistory() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:5001/api/drivers/driver-history')
+      .get('https://dbms-project-taxi-booking-system.onrender.com/api/drivers/driver-history')
       .then((res) => setTrips(res.data))
       .catch((err) => console.log(err))
   }, [])
