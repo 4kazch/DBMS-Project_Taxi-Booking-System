@@ -11,7 +11,7 @@ export default function TripHistory() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/users/trip-history")
+    axios.get("http://localhost:5001/api/users/trip-history")
       .then((res) => {
         setTrips(res.data);
         setLoading(false);

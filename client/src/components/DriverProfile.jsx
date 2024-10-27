@@ -18,7 +18,7 @@ export default function DriverProfile() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/drivers/profile")
+      .get("http://localhost:5001/api/drivers/profile")
       .then((res) => {
         setProfile(res.data)
       })

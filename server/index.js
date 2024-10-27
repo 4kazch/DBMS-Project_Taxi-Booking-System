@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const mysql = require('mysql2');
+const { Pool } = require('pg'); // Import pg for PostgreSQL
 const driverRoutes = require('./routes/drivers');
 const userRoutes = require('./routes/users');
 const bcrypt = require('bcryptjs');
@@ -11,16 +11,33 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// MySQL connection
+// PostgreSQL connection
+const db = new Pool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT, // Usually 5432 for PostgreSQL
+});
 
+// Make the database connection accessible to routes
+app.set('db', db);
 
-app.use('/api/drivers', driverRoutes);
-app.use('/api/users', userRoutes);
+// Route handlers
+app.use('/api/drivers', (req, res, next) => {
+  req.db = db; // Pass the db instance to route handlers
+  next();
+}, driverRoutes);
+
+app.use('/api/users', (req, res, next) => {
+  req.db = db; // Pass the db instance to route handlers
+  next();
+}, userRoutes);
 
 // Example route
 app.get('/', (req, res) => {
   res.send('Taxi Management API');
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
