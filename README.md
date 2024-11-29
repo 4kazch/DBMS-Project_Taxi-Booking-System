@@ -1,1 +1,3 @@
-# DBMS-Project_Taxi-Booking-System
+# FASTAXI
+![Landing Page](./assets/landingpage.png)
+![Booking](./assets/booking.png)
