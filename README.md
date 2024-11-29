@@ -2,28 +2,31 @@
 
 Fastaxi is a modern and reliable taxi booking application, offering an intuitive and seamless experience for users to book rides quickly and efficiently. Whether you’re a rider or a driver, Fastaxi ensures smooth operations with features tailored to your needs.
 
-## 🌐 Website
-
-[Visit Fastaxi](https://fastaxi.netlify.app)
+<br/>
 
 ## 🚀 Features
 
-- ** Interactive Map Integration**: Powered by Google Maps API to calculate routes and display directions in real-time.
-- ** Taxi Options**: Choose from Economy, Comfort, and Premium taxis with transparent pricing.
-- ** Distance & Duration Estimation**: Automatically calculates the distance and estimated duration between source and destination.
-- ** Responsive Design**: Fully optimized for both desktop and mobile devices.
-
----
+- **Interactive Map Integration**: Powered by Google Maps API to calculate routes and display directions in real-time.
+- **Taxi Options**: Choose from Economy, Comfort, and Premium taxis with transparent pricing.
+- **Distance & Duration Estimation**: Automatically calculates the distance and estimated duration between source and destination.
+- **Responsive Design**: Fully optimized for both desktop and mobile devices.
+<br/>
 
 ## 📸 Screenshots
 
 ### Landing Page
-<img src="./client/assets/landingpage.png" alt="Fastaxi Landing Page" width="700">
+<br/>
+<p align="center">
+   <img src="./client/assets/landingpage.png" alt="Fastaxi Landing Page" width="800">
+</p>
 
 ### Booking Page
-<img src="./client/assets/booking.png" alt="Fastaxi Booking Page" width="700">
+<br/>
+<p align="center">
+   <img src="./client/assets/booking.png" alt="Fastaxi Booking Page" width="800">
+</p>
 
----
+<br/>
 
 ## 🛠 Tech Stack
 
@@ -33,7 +36,13 @@ Fastaxi is a modern and reliable taxi booking application, offering an intuitive
 - **Mapping**: Google Maps API
 - **Hosting**: Netlify
 
----
+<br/>
+
+## 🌐 Website
+
+[https://fastaxi.netlify.app](https://fastaxi.netlify.app)
+
+<br/>
 
 ## 📦 Installation
 
@@ -62,7 +71,7 @@ Fastaxi is a modern and reliable taxi booking application, offering an intuitive
    http://localhost:3000
    ```
 
----
+<br/>
 
 ## 📝 How It Works
 
@@ -71,19 +80,19 @@ Fastaxi is a modern and reliable taxi booking application, offering an intuitive
 3. Choose from available taxi options (Economy, Comfort, Premium).
 4. Confirm your booking and enjoy the ride!
 
----
+<br/>
 
 ## 📞 Support
 
 For any issues or questions, feel free to reach out at: [akashabraham46@gmail.com](mailto:akashabraham46@gmail.com)
 
----
+<br/>
 
 ## 🌟 Show Your Support
 
 If you like this project, please consider giving it a ⭐ on [GitHub](https://github.com/akash-abraham/fastaxi)!
 
----
+<br/>
 
 ## 📄 License
 
