@@ -1,3 +1,3 @@
 # FASTAXI
-![Landing Page](./assets/landingpage.png)
-![Booking](./assets/booking.png)
+![Landing Page](.client/assets/landingpage.png)
+![Booking](.client/assets/booking.png)
