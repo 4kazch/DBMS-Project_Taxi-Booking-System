@@ -84,13 +84,13 @@ Fastaxi is a modern and reliable taxi booking application, offering an intuitive
 
 ## 📞 Support
 
-For any issues or questions, feel free to reach out at: [akashabraham46@gmail.com](mailto:akashabraham46@gmail.com)
+For any issues or questions, feel free to reach out at: <br/>[abhinand2605@gmail.com](mailto:abhinand2605@gmail.com)<br/>[akashabraham4@gmail.com](mailto:akashabraham46@gmail.com)
 
 <br/>
 
 ## 🌟 Show Your Support
 
-If you like this project, please consider giving it a ⭐ on [GitHub](https://github.com/akash-abraham/fastaxi)!
+If you like this project, please consider giving it a ⭐.
 
 <br/>
 
