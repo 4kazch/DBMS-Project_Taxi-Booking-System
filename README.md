@@ -84,7 +84,7 @@ Fastaxi is a modern and reliable taxi booking application, offering an intuitive
 
 ## 📞 Support
 
-For any issues or questions, feel free to reach out at: <br/>[abhinand2605@gmail.com](mailto:abhinand2605@gmail.com)<br/>[akashabraham4@gmail.com](mailto:akashabraham46@gmail.com)
+For any issues or questions, feel free to reach out at: <br/>[abhinand2605@gmail.com](mailto:abhinand2605@gmail.com)<br/>[akashabraham46@gmail.com](mailto:akashabraham46@gmail.com)
 
 <br/>
 
